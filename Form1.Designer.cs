@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnFindBinary = new System.Windows.Forms.Button();
             this.labBinary = new System.Windows.Forms.Label();
             this.diaFindBinary = new System.Windows.Forms.OpenFileDialog();
@@ -39,6 +40,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtCommandLine = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.comMod = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtJoin = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -50,8 +53,9 @@
             this.txtArcadeGame = new System.Windows.Forms.TextBox();
             this.txtArcadeMap = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.comMod = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.chkDebugFile = new System.Windows.Forms.CheckBox();
+            this.btnDebugFile = new System.Windows.Forms.Button();
             this.chkProfile = new System.Windows.Forms.CheckBox();
             this.btnProfile = new System.Windows.Forms.Button();
             this.txtLoopLimit = new System.Windows.Forms.TextBox();
@@ -63,20 +67,19 @@
             this.chkThrottle = new System.Windows.Forms.CheckBox();
             this.chkHost = new System.Windows.Forms.CheckBox();
             this.diaProfile = new System.Windows.Forms.SaveFileDialog();
-            this.chkDebugFile = new System.Windows.Forms.CheckBox();
-            this.btnDebugFile = new System.Windows.Forms.Button();
             this.diaDebugFile = new System.Windows.Forms.SaveFileDialog();
-            this.label8 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.comVideo = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtWindowY = new System.Windows.Forms.TextBox();
+            this.txtWindowX = new System.Windows.Forms.TextBox();
+            this.Mode = new System.Windows.Forms.Label();
+            this.comWindowMode = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.comAudio = new System.Windows.Forms.ComboBox();
-            this.comWindowMode = new System.Windows.Forms.ComboBox();
-            this.Mode = new System.Windows.Forms.Label();
-            this.txtWindowX = new System.Windows.Forms.TextBox();
-            this.txtWindowY = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.comVideo = new System.Windows.Forms.ComboBox();
+            this.txtLog = new System.Windows.Forms.TextBox();
+            this.timLog = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -206,6 +209,25 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Startup and game";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(16, 196);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(28, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Mod";
+            // 
+            // comMod
+            // 
+            this.comMod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comMod.FormattingEnabled = true;
+            this.comMod.Location = new System.Drawing.Point(99, 193);
+            this.comMod.Name = "comMod";
+            this.comMod.Size = new System.Drawing.Size(160, 21);
+            this.comMod.TabIndex = 0;
+            this.comMod.SelectedIndexChanged += new System.EventHandler(this.general_SelectedIndexChanged);
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -304,16 +326,6 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "Mode";
             // 
-            // comMod
-            // 
-            this.comMod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comMod.FormattingEnabled = true;
-            this.comMod.Location = new System.Drawing.Point(99, 193);
-            this.comMod.Name = "comMod";
-            this.comMod.Size = new System.Drawing.Size(160, 21);
-            this.comMod.TabIndex = 0;
-            this.comMod.SelectedIndexChanged += new System.EventHandler(this.general_SelectedIndexChanged);
-            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.chkDebugFile);
@@ -331,6 +343,27 @@
             this.groupBox4.TabIndex = 8;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Debug";
+            // 
+            // chkDebugFile
+            // 
+            this.chkDebugFile.AutoSize = true;
+            this.chkDebugFile.Location = new System.Drawing.Point(150, 112);
+            this.chkDebugFile.Name = "chkDebugFile";
+            this.chkDebugFile.Size = new System.Drawing.Size(86, 17);
+            this.chkDebugFile.TabIndex = 8;
+            this.chkDebugFile.Text = "Debug to file";
+            this.chkDebugFile.UseVisualStyleBackColor = true;
+            this.chkDebugFile.CheckedChanged += new System.EventHandler(this.general_CheckedChanged);
+            // 
+            // btnDebugFile
+            // 
+            this.btnDebugFile.Location = new System.Drawing.Point(252, 108);
+            this.btnDebugFile.Name = "btnDebugFile";
+            this.btnDebugFile.Size = new System.Drawing.Size(62, 23);
+            this.btnDebugFile.TabIndex = 7;
+            this.btnDebugFile.Text = "FILE";
+            this.btnDebugFile.UseVisualStyleBackColor = true;
+            this.btnDebugFile.Click += new System.EventHandler(this.btnDebugFile_Click);
             // 
             // chkProfile
             // 
@@ -457,36 +490,6 @@
             // 
             this.diaProfile.Filter = "Text|*.txt";
             // 
-            // chkDebugFile
-            // 
-            this.chkDebugFile.AutoSize = true;
-            this.chkDebugFile.Location = new System.Drawing.Point(150, 112);
-            this.chkDebugFile.Name = "chkDebugFile";
-            this.chkDebugFile.Size = new System.Drawing.Size(86, 17);
-            this.chkDebugFile.TabIndex = 8;
-            this.chkDebugFile.Text = "Debug to file";
-            this.chkDebugFile.UseVisualStyleBackColor = true;
-            this.chkDebugFile.CheckedChanged += new System.EventHandler(this.general_CheckedChanged);
-            // 
-            // btnDebugFile
-            // 
-            this.btnDebugFile.Location = new System.Drawing.Point(252, 108);
-            this.btnDebugFile.Name = "btnDebugFile";
-            this.btnDebugFile.Size = new System.Drawing.Size(62, 23);
-            this.btnDebugFile.TabIndex = 7;
-            this.btnDebugFile.Text = "FILE";
-            this.btnDebugFile.UseVisualStyleBackColor = true;
-            this.btnDebugFile.Click += new System.EventHandler(this.btnDebugFile_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(16, 196);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(28, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Mod";
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label11);
@@ -505,29 +508,54 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Interface";
             // 
-            // comVideo
+            // label11
             // 
-            this.comVideo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comVideo.FormattingEnabled = true;
-            this.comVideo.Items.AddRange(new object[] {
-            "opengl",
-            "debug",
-            "ascii",
-            "null"});
-            this.comVideo.Location = new System.Drawing.Point(62, 28);
-            this.comVideo.Name = "comVideo";
-            this.comVideo.Size = new System.Drawing.Size(110, 21);
-            this.comVideo.TabIndex = 0;
-            this.comVideo.SelectedIndexChanged += new System.EventHandler(this.general_SelectedIndexChanged);
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(16, 88);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(27, 13);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "Size";
             // 
-            // label9
+            // txtWindowY
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(16, 31);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(34, 13);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Video";
+            this.txtWindowY.Location = new System.Drawing.Point(112, 85);
+            this.txtWindowY.Name = "txtWindowY";
+            this.txtWindowY.Size = new System.Drawing.Size(44, 20);
+            this.txtWindowY.TabIndex = 7;
+            this.txtWindowY.Text = "768";
+            this.txtWindowY.TextChanged += new System.EventHandler(this.general_TextChanged);
+            // 
+            // txtWindowX
+            // 
+            this.txtWindowX.Location = new System.Drawing.Point(62, 85);
+            this.txtWindowX.Name = "txtWindowX";
+            this.txtWindowX.Size = new System.Drawing.Size(44, 20);
+            this.txtWindowX.TabIndex = 6;
+            this.txtWindowX.Text = "1024";
+            this.txtWindowX.TextChanged += new System.EventHandler(this.general_TextChanged);
+            // 
+            // Mode
+            // 
+            this.Mode.AutoSize = true;
+            this.Mode.Location = new System.Drawing.Point(16, 58);
+            this.Mode.Name = "Mode";
+            this.Mode.Size = new System.Drawing.Size(34, 13);
+            this.Mode.TabIndex = 5;
+            this.Mode.Text = "Mode";
+            // 
+            // comWindowMode
+            // 
+            this.comWindowMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comWindowMode.FormattingEnabled = true;
+            this.comWindowMode.Items.AddRange(new object[] {
+            "window",
+            "fullscreen"});
+            this.comWindowMode.Location = new System.Drawing.Point(62, 55);
+            this.comWindowMode.Name = "comWindowMode";
+            this.comWindowMode.Size = new System.Drawing.Size(110, 21);
+            this.comWindowMode.TabIndex = 4;
+            this.comWindowMode.SelectedIndexChanged += new System.EventHandler(this.general_SelectedIndexChanged);
             // 
             // label10
             // 
@@ -551,60 +579,51 @@
             this.comAudio.TabIndex = 2;
             this.comAudio.SelectedIndexChanged += new System.EventHandler(this.general_SelectedIndexChanged);
             // 
-            // comWindowMode
+            // label9
             // 
-            this.comWindowMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comWindowMode.FormattingEnabled = true;
-            this.comWindowMode.Items.AddRange(new object[] {
-            "window",
-            "fullscreen"});
-            this.comWindowMode.Location = new System.Drawing.Point(62, 55);
-            this.comWindowMode.Name = "comWindowMode";
-            this.comWindowMode.Size = new System.Drawing.Size(110, 21);
-            this.comWindowMode.TabIndex = 4;
-            this.comWindowMode.SelectedIndexChanged += new System.EventHandler(this.general_SelectedIndexChanged);
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(16, 31);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(34, 13);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Video";
             // 
-            // Mode
+            // comVideo
             // 
-            this.Mode.AutoSize = true;
-            this.Mode.Location = new System.Drawing.Point(16, 58);
-            this.Mode.Name = "Mode";
-            this.Mode.Size = new System.Drawing.Size(34, 13);
-            this.Mode.TabIndex = 5;
-            this.Mode.Text = "Mode";
+            this.comVideo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comVideo.FormattingEnabled = true;
+            this.comVideo.Items.AddRange(new object[] {
+            "opengl",
+            "debug",
+            "ascii",
+            "null"});
+            this.comVideo.Location = new System.Drawing.Point(62, 28);
+            this.comVideo.Name = "comVideo";
+            this.comVideo.Size = new System.Drawing.Size(110, 21);
+            this.comVideo.TabIndex = 0;
+            this.comVideo.SelectedIndexChanged += new System.EventHandler(this.general_SelectedIndexChanged);
             // 
-            // txtWindowX
+            // txtLog
             // 
-            this.txtWindowX.Location = new System.Drawing.Point(62, 85);
-            this.txtWindowX.Name = "txtWindowX";
-            this.txtWindowX.Size = new System.Drawing.Size(44, 20);
-            this.txtWindowX.TabIndex = 6;
-            this.txtWindowX.Text = "1024";
-            this.txtWindowX.TextChanged += new System.EventHandler(this.general_TextChanged);
+            this.txtLog.BackColor = System.Drawing.Color.Black;
+            this.txtLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtLog.ForeColor = System.Drawing.Color.White;
+            this.txtLog.Location = new System.Drawing.Point(12, 415);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(809, 100);
+            this.txtLog.TabIndex = 11;
             // 
-            // txtWindowY
+            // timLog
             // 
-            this.txtWindowY.Location = new System.Drawing.Point(112, 85);
-            this.txtWindowY.Name = "txtWindowY";
-            this.txtWindowY.Size = new System.Drawing.Size(44, 20);
-            this.txtWindowY.TabIndex = 7;
-            this.txtWindowY.Text = "768";
-            this.txtWindowY.TextChanged += new System.EventHandler(this.general_TextChanged);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(16, 88);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(27, 13);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "Size";
+            this.timLog.Tick += new System.EventHandler(this.timLog_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(833, 409);
+            this.ClientSize = new System.Drawing.Size(833, 529);
+            this.Controls.Add(this.txtLog);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -625,6 +644,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -680,6 +700,8 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtWindowY;
         private System.Windows.Forms.TextBox txtWindowX;
+        private System.Windows.Forms.TextBox txtLog;
+        private System.Windows.Forms.Timer timLog;
     }
 }
 

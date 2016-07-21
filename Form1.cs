@@ -20,9 +20,13 @@ namespace ChaoticRageLauncher
 {
     public partial class Form1 : Form
     {
+        private List<string> log;
+
+
         public Form1()
         {
             InitializeComponent();
+            log = new List<string>();
         }
 
 
@@ -176,11 +180,32 @@ namespace ChaoticRageLauncher
 
         private void btnLaunch_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo nfo = new ProcessStartInfo();
-            nfo.FileName = labBinary.Text;
-            nfo.WorkingDirectory = labWorkingDir.Text;
-            nfo.Arguments = txtCommandLine.Text;
-            Process.Start(nfo);
+            log.Clear();
+            timLog.Enabled = true;
+
+            Process process = new Process();
+            process.StartInfo.FileName = labBinary.Text;
+            process.StartInfo.WorkingDirectory = labWorkingDir.Text;
+            process.StartInfo.Arguments = txtCommandLine.Text;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.ErrorDataReceived += new DataReceivedEventHandler(outputLineReceived);
+            process.OutputDataReceived += new DataReceivedEventHandler(outputLineReceived);
+            process.Exited += new EventHandler(process_Exited);
+            process.Start();
+            process.BeginErrorReadLine();
+            process.BeginOutputReadLine();
+        }
+
+        void process_Exited(object sender, EventArgs e)
+        {
+            timLog.Enabled = false;
+        }
+
+        private void outputLineReceived(object sender, DataReceivedEventArgs e)
+        {
+            log.Add(e.Data);
         }
 
         private void general_CheckedChanged(object sender, EventArgs e)
@@ -204,6 +229,15 @@ namespace ChaoticRageLauncher
                 chkDebugFile.Tag = diaDebugFile.FileName;
                 rebuildCommandLine();
             }
+        }
+
+        private void timLog_Tick(object sender, EventArgs e)
+        {
+            string ss = "";
+            foreach (string s in log) {
+                ss += s + "\r\n";
+            }
+            txtLog.Text = ss;
         }
     }
 }
