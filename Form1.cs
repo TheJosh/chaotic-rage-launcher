@@ -15,22 +15,38 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 
-
 namespace ChaoticRageLauncher
 {
     public partial class Form1 : Form
     {
         private List<string> log;
 
-
         public Form1()
         {
             InitializeComponent();
             log = new List<string>();
         }
-
-
-
+        
+        private static void errorLog(string s)
+        {
+            FileStream ostrm;
+            StreamWriter writer;
+            TextWriter oldOut = Console.Out;
+            try {
+                ostrm = new FileStream("./log.txt", FileMode.Append, FileAccess.Write);
+                writer = new StreamWriter(ostrm);
+            } catch (Exception e) {
+                Console.WriteLine("Cannot open log.txt for writing!");
+                Console.WriteLine(e.Message);
+                return;
+            }
+            Console.SetOut(writer);
+            Console.WriteLine("[ERROR] " + DateTime.Now.ToString() + ": " + s);
+            Console.SetOut(oldOut);
+            writer.Close();
+            ostrm.Close();
+            Console.WriteLine("[ERROR] " + DateTime.Now.ToString() + ": " + s);
+        }
 
         private void load()
         {
@@ -44,7 +60,11 @@ namespace ChaoticRageLauncher
         {
             Properties.Settings.Default.Binary = labBinary.Text;
             Properties.Settings.Default.WorkingDir = labWorkingDir.Text;
-            Properties.Settings.Default.Save();
+            try {
+                Properties.Settings.Default.Save();
+            } catch (Exception e) {
+                   errorLog("Properties could not be saved, " + e + "\n");
+            }
         }
 
         private void updateWorkingDir()
@@ -53,11 +73,14 @@ namespace ChaoticRageLauncher
 
             string[] dirs = Directory.GetDirectories(wd + "/data");
             comMod.Items.Clear();
-            foreach (string d in dirs) {
-                string e = Path.GetFileName(d);
-                if (e != "i18n" && e != "intro") {
-                    comMod.Items.Add(e);
-                }
+            try {
+                foreach (string d in dirs) {
+                    string e = Path.GetFileName(d);
+                    if (e != "i18n" && e != "intro") {
+                        comMod.Items.Add(e);
+                    }
+            } catch(Exception e) {
+                errorLog("There was an issue populating the list, " + e + "\n");
             }
             comMod.SelectedIndex = 0;
         }
@@ -138,9 +161,6 @@ namespace ChaoticRageLauncher
             txtCommandLine.Text = cmd;
         }
 
-
-
-
         private void btnFindBinary_Click(object sender, EventArgs e)
         {
             diaFindBinary.FileName = labBinary.Text;
@@ -193,7 +213,11 @@ namespace ChaoticRageLauncher
             process.ErrorDataReceived += new DataReceivedEventHandler(outputLineReceived);
             process.OutputDataReceived += new DataReceivedEventHandler(outputLineReceived);
             process.Exited += new EventHandler(process_Exited);
-            process.Start();
+            try {
+                process.Start();
+            } catch(Exception e) {
+                errorLog("Chaotic Rage could not be started! Reason: " + e + "\n");
+            }
             process.BeginErrorReadLine();
             process.BeginOutputReadLine();
         }
